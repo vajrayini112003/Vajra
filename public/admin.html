@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Vaju</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div id="login-view" class="login-box card" style="display:none">
+    <h3>Admin login</h3>
+    <form id="login-form">
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button class="btn" type="submit">Log in</button>
+      <div class="msg err" id="login-msg"></div>
+    </form>
+  </div>
+
+  <div id="admin-view" style="display:none">
+    <div class="admin-topbar">
+      <a class="back-link" href="/index.html" style="margin:0">&larr; view site</a>
+      <button class="link-btn danger" id="logout-btn" style="margin:0">log out</button>
+    </div>
+
+    <div class="card profile-edit">
+      <img class="avatar" id="admin-avatar" src="/img/vajrayini.png" alt="Profile picture">
+      <div>
+        <h3 id="admin-name">Vajrayini</h3>
+        <button class="link-btn" type="button" id="edit-pic-btn" style="margin:6px 0 0">edit profile pic</button>
+        <input type="file" id="pic-input" accept="image/*" hidden>
+        <div class="msg" id="pic-msg"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="form-mode-banner" id="edit-banner" style="display:none">
+        <span>Editing an existing visit</span>
+        <button type="button" class="link-btn" id="cancel-edit-btn" style="margin:0">cancel</button>
+      </div>
+      <h3 id="form-title">Post a new class visit</h3>
+      <form id="visit-form">
+        <div class="field">
+          <label for="v-college">College name</label>
+          <input type="text" id="v-college" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="v-topic">Title / topic taught</label>
+            <input type="text" id="v-topic" placeholder="e.g. Core Java" required>
+          </div>
+          <div class="field">
+            <label for="v-days">No. of days</label>
+            <input type="number" id="v-days" min="1" value="1" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="v-students">Students trained</label>
+          <input type="number" id="v-students" min="0" value="0" required>
+        </div>
+        <div class="field">
+          <label for="v-date">Visit date</label>
+          <input type="date" id="v-date">
+        </div>
+        <div class="field">
+          <label for="v-desc">Description</label>
+          <textarea id="v-desc" placeholder="Notes about the session"></textarea>
+        </div>
+        <div class="field">
+          <label>Existing photos <span style="font-weight:400">(click a photo to remove it)</span></label>
+          <div class="photo-input-preview" id="existing-photo-preview"></div>
+        </div>
+        <div class="field">
+          <label for="v-photos">Add class photos</label>
+          <input type="file" id="v-photos" accept="image/*" multiple>
+          <div class="photo-input-preview" id="new-photo-preview"></div>
+        </div>
+        <button class="btn" type="submit" id="submit-btn">Post</button>
+        <div class="msg" id="visit-msg"></div>
+      </form>
+    </div>
+
+    <div class="register-heading">
+      <h2>Posted visits</h2>
+    </div>
+    <div class="scroll-list" id="admin-list"></div>
+  </div>
+
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>
