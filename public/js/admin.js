@@ -145,19 +145,25 @@ document.getElementById('cancel-edit-btn').addEventListener('click', resetFormTo
 async function loadForEdit(id) {
   const res = await fetch('/api/admin/colleges/' + id);
   if (!res.ok) return;
+
   const c = await res.json();
 
   editingId = id;
   removedPhotos = [];
 
   document.getElementById('v-college').value = c.collegeName || '';
+  document.getElementById('v-department').value = c.department || '';
+  document.getElementById('v-year').value = c.year || '';
   document.getElementById('v-topic').value = c.topic || '';
   document.getElementById('v-days').value = c.noOfDays || 1;
   document.getElementById('v-students').value = c.studentsTrained || 0;
+  document.getElementById('v-start-date').value = c.startDate ? c.startDate.slice(0, 10) : '';
+  document.getElementById('v-end-date').value = c.endDate ? c.endDate.slice(0, 10) : '';
   document.getElementById('v-desc').value = c.description || '';
-  document.getElementById('v-date').value = c.visitDate ? c.visitDate.slice(0, 10) : '';
+
   document.getElementById('new-photo-preview').innerHTML = '';
   document.getElementById('v-photos').value = '';
+
   renderExistingPhotos(c.photos || []);
 
   document.getElementById('edit-banner').style.display = 'flex';
@@ -173,15 +179,26 @@ document.getElementById('visit-form').addEventListener('submit', async (e) => {
   const msg = document.getElementById('visit-msg');
   msg.textContent = '';
   msg.className = 'msg';
+  
+const startDate = document.getElementById('v-start-date').value;
+const endDate = document.getElementById('v-end-date').value;
 
+if (startDate && endDate && endDate < startDate) {
+  msg.textContent = 'End date cannot be before start date.';
+  msg.classList.add('err');
+  return;
+}
   const fd = new FormData();
-  fd.append('collegeName', document.getElementById('v-college').value.trim());
-  fd.append('topic', document.getElementById('v-topic').value.trim());
-  fd.append('noOfDays', document.getElementById('v-days').value);
-  fd.append('studentsTrained', document.getElementById('v-students').value);
-  fd.append('description', document.getElementById('v-desc').value.trim());
-  const dateVal = document.getElementById('v-date').value;
-  if (dateVal) fd.append('visitDate', dateVal);
+fd.append('collegeName', document.getElementById('v-college').value.trim());
+fd.append('department', document.getElementById('v-department').value.trim());
+fd.append('year', document.getElementById('v-year').value.trim());
+fd.append('topic', document.getElementById('v-topic').value.trim());
+fd.append('noOfDays', document.getElementById('v-days').value);
+fd.append('studentsTrained', document.getElementById('v-students').value);
+fd.append('startDate', document.getElementById('v-start-date').value);
+fd.append('endDate', document.getElementById('v-end-date').value);
+fd.append('description', document.getElementById('v-desc').value.trim());
+  
   [...document.getElementById('v-photos').files].forEach(f => fd.append('photos', f));
   if (editingId) fd.append('removePhotos', JSON.stringify(removedPhotos));
 
