@@ -48,24 +48,46 @@
           <label for="v-college">College name</label>
           <input type="text" id="v-college" required>
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="v-topic">Title / topic taught</label>
-            <input type="text" id="v-topic" placeholder="e.g. Core Java" required>
-          </div>
-          <div class="field">
-            <label for="v-days">No. of days</label>
-            <input type="number" id="v-days" min="1" value="1" required>
-          </div>
-        </div>
-        <div class="field">
-          <label for="v-students">Students trained</label>
-          <input type="number" id="v-students" min="0" value="0" required>
-        </div>
-        <div class="field">
-          <label for="v-date">Visit date</label>
-          <input type="date" id="v-date">
-        </div>
+<div class="field-row">
+  <div class="field">
+    <label for="v-department">Department</label>
+    <input type="text" id="v-department" placeholder="e.g. CSE" required>
+  </div>
+
+  <div class="field">
+    <label for="v-year">Year</label>
+    <input type="text" id="v-year" placeholder="e.g. III Year" required>
+  </div>
+</div>
+
+<div class="field-row">
+  <div class="field">
+    <label for="v-topic">Title / topic taught</label>
+    <input type="text" id="v-topic" placeholder="e.g. Core Java" required>
+  </div>
+
+  <div class="field">
+    <label for="v-days">No. of days</label>
+    <input type="number" id="v-days" min="1" value="1" required>
+  </div>
+</div>
+
+<div class="field">
+  <label for="v-students">Students trained</label>
+  <input type="number" id="v-students" min="0" value="0" required>
+</div>
+
+<div class="field-row">
+  <div class="field">
+    <label for="v-start-date">Start date</label>
+    <input type="date" id="v-start-date" required>
+  </div>
+
+  <div class="field">
+    <label for="v-end-date">End date</label>
+    <input type="date" id="v-end-date" required>
+  </div>
+</div>
         <div class="field">
           <label for="v-desc">Description</label>
           <textarea id="v-desc" placeholder="Notes about the session"></textarea>
