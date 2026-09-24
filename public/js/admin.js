@@ -46,8 +46,24 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 
 // ---- profile picture ----
 async function loadProfile() {
-  const p = await (await fetch('/api/colleges/profile')).json();
-  document.getElementById('admin-avatar').src = p.photo;
+  const avatar = document.getElementById('admin-avatar');
+
+  // Hide image until the current photo is loaded
+  avatar.style.visibility = 'hidden';
+
+  const res = await fetch('/api/colleges/profile');
+  const p = await res.json();
+
+  avatar.onload = () => {
+    avatar.style.visibility = 'visible';
+  };
+
+  avatar.onerror = () => {
+    avatar.style.visibility = 'visible';
+  };
+
+  avatar.src = p.photo;
+
   document.getElementById('admin-name').textContent = p.name;
 }
 document.getElementById('edit-pic-btn').addEventListener('click', () => document.getElementById('pic-input').click());
