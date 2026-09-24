@@ -1,7 +1,5 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const College = require('../models/College');
 const Feedback = require('../models/Feedback');
 const Profile = require('../models/Profile');
@@ -9,19 +7,10 @@ const { requireAdmin } = require('../middleware/auth');
 
 const router = express.Router();
 
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, unique + path.extname(file.originalname));
-  }
-});
 const upload = multer({
-  storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 3 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) cb(null, true);
     else cb(new Error('Only image files are allowed'));
@@ -85,7 +74,9 @@ router.post('/colleges', requireAdmin, upload.array('photos', 10), async (req, r
     if (!collegeName || !topic) {
       return res.status(400).json({ error: 'College name and topic are required' });
     }
-    const photos = (req.files || []).map(f => '/uploads/' + f.filename);
+    const photos = (req.files || []).map(f =>
+  `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
+);
     const college = await College.create({
       collegeName,
       topic,
@@ -126,7 +117,11 @@ router.put('/colleges/:id', requireAdmin, upload.array('photos', 10), async (req
       photos = photos.filter(p => !toRemove.includes(p));
     }
     if (req.files && req.files.length) {
-      photos = photos.concat(req.files.map(f => '/uploads/' + f.filename));
+      photos = photos.concat(
+  req.files.map(f =>
+    `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
+  )
+);
     }
 
     existing.collegeName = collegeName;
