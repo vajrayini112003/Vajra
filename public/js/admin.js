@@ -62,7 +62,7 @@ document.getElementById('pic-input').addEventListener('change', async (e) => {
     const res = await fetch('/api/admin/profile', { method: 'PUT', body: fd });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Upload failed');
-    document.getElementById('admin-avatar').src = data.photo + '?t=' + Date.now();
+    document.getElementById('admin-avatar').src = data.photo;
     msg.textContent = 'Profile picture updated.'; msg.classList.add('ok');
   } catch (err) {
     msg.textContent = err.message; msg.classList.add('err');
