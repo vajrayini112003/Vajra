@@ -38,7 +38,7 @@ router.get('/stats', async (req, res) => {
 // Home page data: every college, newest visit first, each with its feedback list
 router.get('/', async (req, res) => {
   try {
-    const colleges = await College.find().sort({ visitDate: -1 }).lean();
+    const colleges = await College.find().sort({ startDate: -1 }).lean();
     const feedbacks = await Feedback.find().sort({ createdAt: -1 }).lean();
 
     const byCollege = {};
