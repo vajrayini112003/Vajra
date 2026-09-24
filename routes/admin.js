@@ -28,6 +28,18 @@ const upload = multer({
   }
 });
 
+const profileUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  }
+});
+
 router.post('/login', (req, res) => {
   const { password } = req.body;
   if (password && password === process.env.ADMIN_PASSWORD) {
@@ -46,12 +58,20 @@ router.get('/check', (req, res) => {
 });
 
 // change the profile picture
-router.put('/profile', requireAdmin, upload.single('photo'), async (req, res) => {
+router.put('/profile', requireAdmin, profileUpload.single('photo'), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: 'Please choose a photo' });
+    if (!req.file) {
+      return res.status(400).json({ error: 'Please choose a photo' });
+    }
+
     const profile = (await Profile.findOne()) || new Profile();
-    profile.photo = '/uploads/' + req.file.filename;
+
+    const base64Image = req.file.buffer.toString('base64');
+
+    profile.photo = `data:${req.file.mimetype};base64,${base64Image}`;
+
     await profile.save();
+
     res.json(profile);
   } catch (err) {
     res.status(500).json({ error: err.message });
