@@ -9,8 +9,26 @@ let colleges = [], current = null, timer = null, rating = 0;
 const SLIDE_MS = 5000; // 5-second delay between photos
 
 async function loadProfile() {
-  const p = await (await fetch('/api/colleges/profile')).json();
-  $('avatar').src = p.photo; $('p-name').textContent = p.name; $('p-title').textContent = p.title;
+  const avatar = $('avatar');
+
+  // Hide image until current profile photo is loaded
+  avatar.style.visibility = 'hidden';
+
+  const res = await fetch('/api/colleges/profile');
+  const p = await res.json();
+
+  avatar.onload = () => {
+    avatar.style.visibility = 'visible';
+  };
+
+  avatar.onerror = () => {
+    avatar.style.visibility = 'visible';
+  };
+
+  avatar.src = p.photo;
+
+  $('p-name').textContent = p.name;
+  $('p-title').textContent = p.title;
 }
 async function loadStats() {
   const s = await (await fetch('/api/colleges/stats')).json();
