@@ -68,24 +68,50 @@ router.put('/profile', requireAdmin, profileUpload.single('photo'), async (req, 
 });
 
 // create a new class-visit post
+// create a new class-visit post
 router.post('/colleges', requireAdmin, upload.array('photos', 10), async (req, res) => {
   try {
-    const { collegeName, topic, description, noOfDays, studentsTrained, visitDate } = req.body;
-    if (!collegeName || !topic) {
-      return res.status(400).json({ error: 'College name and topic are required' });
+    const {
+      collegeName,
+      department,
+      year,
+      topic,
+      description,
+      noOfDays,
+      studentsTrained,
+      startDate,
+      endDate
+    } = req.body;
+
+    if (!collegeName || !department || !year || !topic || !startDate || !endDate) {
+      return res.status(400).json({
+        error: 'College name, department, year, topic, start date and end date are required'
+      });
     }
+
+    if (endDate < startDate) {
+      return res.status(400).json({
+        error: 'End date cannot be before start date'
+      });
+    }
+
     const photos = (req.files || []).map(f =>
-  `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
-);
+      `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
+    );
+
     const college = await College.create({
       collegeName,
+      department,
+      year,
       topic,
       description,
       noOfDays: Number(noOfDays) || 1,
       studentsTrained: Number(studentsTrained) || 0,
-      visitDate: visitDate || Date.now(),
+      startDate,
+      endDate,
       photos
     });
+
     res.status(201).json(college);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -105,35 +131,70 @@ router.get('/colleges/:id', requireAdmin, async (req, res) => {
 
 // edit an existing post. New photos (if any) are ADDED to the existing ones;
 // removePhotos (array of paths, sent as JSON string) lets the admin drop old ones.
+// edit an existing post
 router.put('/colleges/:id', requireAdmin, upload.array('photos', 10), async (req, res) => {
   try {
-    const { collegeName, topic, description, noOfDays, studentsTrained, visitDate, removePhotos } = req.body;
+    const {
+      collegeName,
+      department,
+      year,
+      topic,
+      description,
+      noOfDays,
+      studentsTrained,
+      startDate,
+      endDate,
+      removePhotos
+    } = req.body;
+
     const existing = await College.findById(req.params.id);
-    if (!existing) return res.status(404).json({ error: 'Not found' });
+
+    if (!existing) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    if (!collegeName || !department || !year || !topic || !startDate || !endDate) {
+      return res.status(400).json({
+        error: 'College name, department, year, topic, start date and end date are required'
+      });
+    }
+
+    if (endDate < startDate) {
+      return res.status(400).json({
+        error: 'End date cannot be before start date'
+      });
+    }
 
     let photos = existing.photos || [];
+
     if (removePhotos) {
       const toRemove = JSON.parse(removePhotos);
       photos = photos.filter(p => !toRemove.includes(p));
     }
+
     if (req.files && req.files.length) {
       photos = photos.concat(
-  req.files.map(f =>
-    `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
-  )
-);
+        req.files.map(f =>
+          `data:${f.mimetype};base64,${f.buffer.toString('base64')}`
+        )
+      );
     }
 
     existing.collegeName = collegeName;
+    existing.department = department;
+    existing.year = year;
     existing.topic = topic;
     existing.description = description;
     existing.noOfDays = Number(noOfDays) || 1;
     existing.studentsTrained = Number(studentsTrained) || 0;
-    if (visitDate) existing.visitDate = visitDate;
+    existing.startDate = startDate;
+    existing.endDate = endDate;
     existing.photos = photos;
+
     await existing.save();
 
     res.json(existing);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
