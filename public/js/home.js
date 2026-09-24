@@ -11,7 +11,7 @@ const SLIDE_MS = 5000; // 5-second delay between photos
 async function loadProfile() {
   const avatar = $('avatar');
 
-  // Hide image until current profile photo is loaded
+ 
   avatar.style.visibility = 'hidden';
 
   const res = await fetch('/api/colleges/profile');
@@ -50,19 +50,59 @@ function startSlides(photos) {
 
 function show(c) {
   current = c;
-  if (!c) { clearInterval(timer); $('feedback-card').style.display = 'none'; $('feedback-list').innerHTML = ''; return; }
+
+  if (!c) {
+    clearInterval(timer);
+    $('feedback-card').style.display = 'none';
+    $('feedback-list').innerHTML = '';
+    return;
+  }
+
   const ph = c.photos || [];
+
+  const dateText = c.startDate && c.endDate
+    ? `${fmt(c.startDate)} – ${fmt(c.endDate)}`
+    : c.startDate
+      ? fmt(c.startDate)
+      : '';
+
+  const departmentYear = [
+    c.department,
+    c.year
+  ].filter(Boolean).map(esc).join(' · ');
+
   $('college-view').innerHTML = `
     <div class="hero">${ph.length
       ? ph.map((p, k) => `<img class="slide${k ? '' : ' on'}" src="${p}" alt="">`).join('') +
-        (ph.length > 1 ? `<div class="dots">${ph.map((_, k) => `<span class="dot${k ? '' : ' on'}"></span>`).join('')}</div>` : '')
+        (ph.length > 1
+          ? `<div class="dots">${ph.map((_, k) =>
+              `<span class="dot${k ? '' : ' on'}"></span>`
+            ).join('')}</div>`
+          : '')
       : '<div class="hero-empty">No photos yet</div>'}</div>
-    <div class="clg-head"><h2>${esc(c.collegeName)}</h2>
-      <div class="entry-meta">${fmt(c.visitDate)} · ${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}${c.studentsTrained ? ' · ' + c.studentsTrained + ' students' : ''}</div></div>
+
+    <div class="clg-head">
+      <h2>${esc(c.collegeName)}</h2>
+
+      <div class="entry-meta">
+        ${dateText}
+        ${departmentYear ? ' · ' + departmentYear : ''}
+        ${c.noOfDays ? ` · ${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}` : ''}
+        ${c.studentsTrained ? ` · ${c.studentsTrained} students` : ''}
+      </div>
+    </div>
+
     <span class="entry-topic">${esc(c.topic)}</span>
-    ${c.description ? `<p class="entry-desc">${esc(c.description)}</p>` : ''}`;
-  $('month-pick').value = monthKey(c.visitDate);
+
+    ${c.description
+      ? `<p class="entry-desc">${esc(c.description)}</p>`
+      : ''}
+  `;
+
+  $('month-pick').value = monthKey(c.startDate);
+
   $('feedback-card').style.display = 'block';
+
   startSlides(ph);
   renderFeedback();
 }
@@ -79,7 +119,7 @@ function renderFeedback() {
 
 function renderMenu() {
   $('clg-menu').innerHTML = colleges.length
-    ? colleges.map(c => `<button type="button" data-id="${c._id}" class="${current && current._id === c._id ? 'sel' : ''}">${esc(c.collegeName)}<small>${monthLabel(monthKey(c.visitDate))}</small></button>`).join('')
+    ? colleges.map(c => `<button type="button" data-id="${c._id}" class="${current && current._id === c._id ? 'sel' : ''}">${esc(c.collegeName)}<small>${monthLabel(monthKey(c.startDate))}</small></button>`).join('')
     : '<div class="ticker-empty" style="padding:10px 14px">No colleges yet</div>';
 }
 
@@ -94,7 +134,7 @@ document.addEventListener('click', e => { if (!$('clg-picker').contains(e.target
 $('month-pick').addEventListener('change', e => {
   const k = e.target.value;
   if (!k) return show(colleges[0]);
-  const hit = colleges.find(c => monthKey(c.visitDate) === k);
+  const hit = colleges.find(c => monthKey(c.startDate) === k);
   if (hit) return show(hit);
   clearInterval(timer); current = null;
   $('college-view').innerHTML = `<div class="empty-state">No college visit recorded in ${monthLabel(k)}.</div>`;
