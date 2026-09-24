@@ -67,8 +67,7 @@ router.put('/profile', requireAdmin, profileUpload.single('photo'), async (req, 
   }
 });
 
-// create a new class-visit post
-// create a new class-visit post
+
 router.post('/colleges', requireAdmin, upload.array('photos', 10), async (req, res) => {
   try {
     const {
@@ -118,7 +117,6 @@ router.post('/colleges', requireAdmin, upload.array('photos', 10), async (req, r
   }
 });
 
-// fetch one college for editing (admin-only, includes full doc)
 router.get('/colleges/:id', requireAdmin, async (req, res) => {
   try {
     const college = await College.findById(req.params.id);
@@ -129,9 +127,7 @@ router.get('/colleges/:id', requireAdmin, async (req, res) => {
   }
 });
 
-// edit an existing post. New photos (if any) are ADDED to the existing ones;
-// removePhotos (array of paths, sent as JSON string) lets the admin drop old ones.
-// edit an existing post
+
 router.put('/colleges/:id', requireAdmin, upload.array('photos', 10), async (req, res) => {
   try {
     const {
