@@ -12,8 +12,13 @@
   --radius: 3px;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -23,273 +28,422 @@ body {
   line-height: 1.5;
 }
 
-h1, h2, h3, .display {
+h1,
+h2,
+h3,
+.display {
   font-family: 'Fraunces', serif;
   font-weight: 600;
   margin: 0;
   color: var(--ink);
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
-.wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-.header { border-bottom: 2px solid var(--ink); padding: 40px 0 28px; }
-.header-row { display: flex; align-items: center; gap: 24px; }
+/* ===== HEADER ===== */
+
+.header {
+  border-bottom: 2px solid var(--ink);
+  padding: 40px 0 28px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
 
 .avatar {
-  width: 84px; height: 84px; border-radius: 50%;
-  border: 2px solid var(--ink); object-fit: cover;
-  background: var(--paper-raised); flex-shrink: 0;
-}
-.avatar-fallback {
-  width: 84px; height: 84px; border-radius: 50%;
-  border: 2px solid var(--ink); background: var(--paper-raised);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Fraunces', serif; font-size: 32px; flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  object-fit: cover;
+  background: var(--paper-raised);
+  flex-shrink: 0;
 }
 
-.header h1 { font-size: 36px; }
+.avatar-fallback {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--paper-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.header h1 {
+  font-size: 36px;
+}
+
 .header .role {
-  font-family: 'IBM Plex Mono', monospace; font-size: 13px;
-  letter-spacing: 0.03em; color: var(--teal); margin-top: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--teal);
+  margin-top: 4px;
 }
+
 .header .stats {
-  margin-top: 14px; display: flex; gap: 28px;
-  font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted);
+  margin-top: 14px;
+  display: flex;
+  gap: 28px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
 }
+
 .header .stats b {
-  color: var(--ink); font-size: 16px; display: block; font-family: 'Fraunces', serif;
+  color: var(--ink);
+  font-size: 16px;
+  display: block;
+  font-family: 'Fraunces', serif;
 }
+
+/* ===== REGISTER / OLD LIST STYLES ===== */
 
 .register-heading {
-  display: flex; align-items: baseline; justify-content: space-between; margin: 40px 0 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 40px 0 8px;
 }
-.register-heading h2 { font-size: 22px; }
-.register-heading .count { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); }
+
+.register-heading h2 {
+  font-size: 22px;
+}
+
+.register-heading .count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+}
 
 .entry {
-  border-top: 1px solid var(--rule); padding: 26px 0;
-  display: grid; grid-template-columns: 96px 1fr; gap: 20px;
+  border-top: 1px solid var(--rule);
+  padding: 26px 0;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 20px;
 }
-.entry:last-child { border-bottom: 1px solid var(--rule); }
+
+.entry:last-child {
+  border-bottom: 1px solid var(--rule);
+}
 
 .entry-photo {
-  width: 96px; height: 96px; border-radius: var(--radius); object-fit: cover;
-  border: 1px solid var(--rule); background: var(--paper-raised);
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
 }
+
 .entry-photo-fallback {
-  width: 96px; height: 96px; border-radius: var(--radius);
-  border: 1px dashed var(--rule); background: var(--paper-raised);
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--rule);
+  background: var(--paper-raised);
 }
 
-.entry-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.entry-college { font-size: 20px; }
-.entry-college a { text-decoration: none; }
-.entry-college a:hover { text-decoration: underline; }
-.entry-meta { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
-
-.entry-topic {
-  display: inline-block; margin-top: 6px; font-size: 13px; color: var(--teal);
-  border: 1px solid var(--teal); border-radius: 20px; padding: 3px 11px;
-}
-.entry-desc { margin-top: 10px; font-size: 14.5px; color: #40453c; max-width: 62ch; }
-
-.ticker { margin-top: 16px; border-left: 2px solid var(--gold); padding-left: 12px; min-height: 44px; }
-.ticker-empty { font-size: 13px; color: var(--muted); font-style: italic; }
-.ticker-item { display: none; animation: fadein .5s ease; }
-.ticker-item.active { display: block; }
-@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
-.ticker-quote { font-size: 14px; color: var(--ink); }
-.ticker-who { margin-top: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted); }
-.stars { color: var(--gold); letter-spacing: 1px; font-size: 12px; }
-
-.empty-state { padding: 60px 0; text-align: center; color: var(--muted); }
-
-.footer {
-  margin-top: 60px; padding: 24px 0 60px; border-top: 1px solid var(--rule);
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted);
-  display: flex; justify-content: space-between;
-}
-.footer a { color: var(--teal); text-decoration: none; }
-
-.back-link {
-  display: inline-block; margin: 28px 0 10px; font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px; color: var(--teal); text-decoration: none;
-}
-
-.detail-photos {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px; margin: 20px 0;
-}
-.detail-photos img {
-  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule);
-}
-
-.card {
-  background: var(--paper-raised); border: 1px solid var(--rule);
-  border-radius: var(--radius); padding: 24px; margin-top: 24px;
-}
-
-.field { margin-bottom: 16px; }
-.field label {
-  display: block; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-  color: var(--muted); margin-bottom: 6px;
-}
-.field input, .field select, .field textarea {
-  width: 100%; border: 1px solid var(--rule); background: var(--paper);
-  border-radius: var(--radius); padding: 10px 12px; font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px; color: var(--ink);
-}
-.field textarea { resize: vertical; min-height: 90px; }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-.star-picker { display: flex; gap: 6px; font-size: 26px; }
-.star-picker span { cursor: pointer; color: var(--rule); }
-.star-picker span.on { color: var(--gold); }
-
-.btn {
-  border: none; background: var(--ink); color: var(--paper);
-  font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.02em;
-  padding: 12px 22px; border-radius: var(--radius); cursor: pointer;
-}
-.btn:hover { background: var(--teal); }
-.btn:disabled { opacity: .5; cursor: default; }
-.btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
-
-.msg { font-size: 13px; margin-top: 10px; }
-.msg.ok { color: var(--teal); }
-.msg.err { color: var(--rust); }
-
-.feedback-list { margin-top: 24px; }
-.feedback-row { border-top: 1px solid var(--rule); padding: 16px 0; }
-.feedback-row:last-child { border-bottom: 1px solid var(--rule); }
-.feedback-head { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
-.feedback-name { color: var(--ink); font-weight: 500; }
-
-.login-box { max-width: 340px; margin: 100px auto; }
-
-.photo-input-preview {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-top: 10px;
-}
-.photo-input-preview .thumb { position: relative; }
-.photo-input-preview img {
-  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule);
-}
-.photo-input-preview .remove-x {
-  position: absolute; top: -6px; right: -6px; width: 20px; height: 20px;
-  border-radius: 50%; background: var(--rust); color: #fff; border: none;
-  font-size: 12px; line-height: 20px; cursor: pointer; text-align: center; padding: 0;
-}
-
-.admin-topbar { display: flex; justify-content: space-between; align-items: center; padding-top: 30px; }
-
-.admin-list-row {
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid var(--rule); padding: 14px 0; font-size: 14px; gap: 12px; flex-wrap: wrap;
-}
-.admin-list-row:last-child { border-bottom: 1px solid var(--rule); }
-
-.link-btn {
-  background: none; border: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-  color: var(--teal); cursor: pointer; text-decoration: underline; padding: 0; margin-right: 14px;
-}
-.link-btn.danger { color: var(--rust); }
-
-.form-mode-banner {
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--gold);
-  border: 1px solid var(--gold); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 16px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-
-@media (max-width: 560px) {
-  .entry { grid-template-columns: 64px 1fr; }
-  .entry-photo, .entry-photo-fallback { width: 64px; height: 64px; }
-  .field-row { grid-template-columns: 1fr; }
-  .header-row { flex-wrap: wrap; }
-}
-
-/* ---- home page v2: profile, stats bar, month picker, slideshow, college list ---- */
-.stats-bar { margin-top: 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
-.stats-bar .stats { margin-top: 0; }
-.month-bar { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted); display: block; }
-.month-bar input {
-  display: block; margin-top: 4px; border: 1px solid var(--ink); background: var(--paper-raised);
-  border-radius: var(--radius); padding: 8px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink);
-}
-.avatar { background: linear-gradient(160deg, #efe3bd, #d9e4dc); }
-
-.hero { position: relative; margin-top: 28px; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: var(--paper-raised); border: 1px solid var(--rule); }
-.slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s ease; }
-.slide.on { opacity: 1; }
-.hero-empty { height: 100%; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; }
-.dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 7px; }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.55); cursor: pointer; border: 1px solid rgba(0,0,0,.25); }
-.dot.on { background: var(--gold); }
-.clg-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-.clg-head h2 { font-size: 26px; }
-#college-view .entry-topic { margin-top: 10px; }
-#college-view .entry-desc { max-width: 100%; }
-
-.clg-picker { position: fixed; right: 20px; bottom: 20px; z-index: 10; text-align: right; }
-.clg-menu {
-  margin-bottom: 8px; max-height: 50vh; overflow-y: auto; min-width: 230px; text-align: left;
-  background: var(--paper-raised); border: 1px solid var(--ink); border-radius: var(--radius); box-shadow: 0 6px 18px rgba(0,0,0,.15);
-}
-.clg-menu[hidden] { display: none; }
-.clg-menu button {
-  display: block; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--rule);
-  padding: 10px 14px; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; color: var(--ink); cursor: pointer;
-}
-.clg-menu button:last-child { border-bottom: none; }
-.clg-menu button:hover, .clg-menu button.sel { background: #efe7cf; }
-.clg-menu small { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
-.footer { justify-content: flex-start; }
-.footer a { font-size: 11px; opacity: .7; }
-
-/* admin */
-.profile-edit { display: flex; align-items: center; gap: 16px; }
-.profile-edit .avatar { width: 72px; height: 72px; }
-.scroll-list { max-height: 320px; overflow-y: auto; border-bottom: 1px solid var(--rule); }
-.scroll-list .admin-list-row:last-child { border-bottom: none; }
-
-/* ---- college details + feedback layout ---- */
-
-.college-info {
+.entry-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  margin-top: 8px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.college-info-left {
+.entry-college {
+  font-size: 20px;
+}
+
+.entry-college a {
+  text-decoration: none;
+}
+
+.entry-college a:hover {
+  text-decoration: underline;
+}
+
+.entry-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.entry-topic {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 20px;
+  padding: 3px 11px;
+}
+
+.entry-desc {
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: #40453c;
+  max-width: 62ch;
+}
+
+/* ===== TICKER ===== */
+
+.ticker {
+  margin-top: 16px;
+  border-left: 2px solid var(--gold);
+  padding-left: 12px;
+  min-height: 44px;
+}
+
+.ticker-empty {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.ticker-item {
+  display: none;
+  animation: fadein .5s ease;
+}
+
+.ticker-item.active {
+  display: block;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ticker-quote {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.ticker-who {
+  margin-top: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.stars {
+  color: var(--gold);
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.empty-state {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
+  margin-top: 60px;
+  padding: 24px 0 60px;
+  border-top: 1px solid var(--rule);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  justify-content: flex-start;
 }
 
-.department-year,
-.training-info {
+.footer a {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 11px;
+  opacity: .7;
+}
+
+.back-link {
+  display: inline-block;
+  margin: 28px 0 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--teal);
+  text-decoration: none;
+}
+
+/* ===== DETAIL PHOTOS ===== */
+
+.detail-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.detail-photos img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+}
+
+/* ===== CARD / FORM ===== */
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   color: var(--muted);
+  margin-bottom: 6px;
 }
 
-.college-dates {
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.star-picker {
+  display: flex;
+  gap: 6px;
+  font-size: 26px;
+}
+
+.star-picker span {
+  cursor: pointer;
+  color: var(--rule);
+}
+
+.star-picker span.on {
+  color: var(--gold);
+}
+
+.btn {
+  border: none;
+  background: var(--ink);
+  color: var(--paper);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  color: var(--muted);
-  text-align: right;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--teal);
+}
+
+.btn:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.msg {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.msg.ok {
+  color: var(--teal);
+}
+
+.msg.err {
+  color: var(--rust);
+}
+
+/* ===== FEEDBACK ===== */
+
+.feedback-list {
+  margin-top: 30px;
 }
 
 .feedback-section {
-  margin-top: 30px;
+  margin-top: 0;
 }
 
 .feedback-section h3 {
   font-size: 20px;
   margin-bottom: 8px;
+}
+
+.feedback-row {
+  border-top: 1px solid var(--rule);
+  padding: 16px 0;
+}
+
+.feedback-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.feedback-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.feedback-name {
+  color: var(--ink);
+  font-weight: 500;
 }
 
 .feedback-comment {
@@ -302,14 +456,397 @@ a { color: inherit; }
   margin-top: 24px;
 }
 
+/* ===== LOGIN ===== */
+
+.login-box {
+  max-width: 340px;
+  margin: 100px auto;
+}
+
+/* ===== PHOTO INPUT ===== */
+
+.photo-input-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.photo-input-preview .thumb {
+  position: relative;
+}
+
+.photo-input-preview img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+}
+
+.photo-input-preview .remove-x {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--rust);
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  line-height: 20px;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+}
+
+/* ===== ADMIN ===== */
+
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.admin-list-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+  padding: 14px 0;
+  font-size: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-list-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--teal);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-right: 14px;
+}
+
+.link-btn.danger {
+  color: var(--rust);
+}
+
+.form-mode-banner {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-edit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-edit .avatar {
+  width: 72px;
+  height: 72px;
+}
+
+.scroll-list {
+  max-height: 320px;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--rule);
+}
+
+.scroll-list .admin-list-row:last-child {
+  border-bottom: none;
+}
+
+/* =========================================================
+   HOME PAGE
+   ========================================================= */
+
+.stats-bar {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.stats-bar .stats {
+  margin-top: 0;
+}
+
+.month-bar {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+  display: block;
+}
+
+.month-bar input {
+  display: block;
+  margin-top: 4px;
+  border: 1px solid var(--ink);
+  background: var(--paper-raised);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.avatar {
+  background: linear-gradient(160deg, #efe3bd, #d9e4dc);
+}
+
+/* =========================================================
+   COLLEGE PHOTO
+   ========================================================= */
+
+.hero {
+  position: relative;
+  margin-top: 28px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--paper-raised);
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+
+.slide.on {
+  opacity: 1;
+}
+
+.hero-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.25);
+}
+
+.dot.on {
+  background: var(--gold);
+}
+
+/* =========================================================
+   COLLEGE DETAILS
+
+   College Name                    Date
+   Department · Year
+
+   Course Title                   Days · Students
+   ========================================================= */
+
+.college-details {
+  margin-top: 22px;
+}
+
+.college-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.college-title-row h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.college-dates {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.department-year {
+  margin-top: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.course-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.course-row .entry-topic {
+  margin-top: 0;
+}
+
+.course-row .training-info {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+#college-view .entry-desc {
+  max-width: 100%;
+}
+
+/* =========================================================
+   COLLEGE PICKER
+   ========================================================= */
+
+.clg-picker {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+  text-align: right;
+}
+
+.clg-menu {
+  margin-bottom: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+  min-width: 230px;
+  text-align: left;
+  background: var(--paper-raised);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+}
+
+.clg-menu[hidden] {
+  display: none;
+}
+
+.clg-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 14px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.clg-menu button:last-child {
+  border-bottom: none;
+}
+
+.clg-menu button:hover,
+.clg-menu button.sel {
+  background: #efe7cf;
+}
+
+.clg-menu small {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 560px) {
-  .college-info {
-    align-items: flex-start;
+
+  .entry {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .entry-photo,
+  .entry-photo-fallback {
+    width: 64px;
+    height: 64px;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .header-row {
+    flex-wrap: wrap;
+  }
+
+  .college-title-row {
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 6px;
   }
 
   .college-dates {
     text-align: left;
+    white-space: normal;
   }
+
+  .course-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .course-row .training-info {
+    text-align: left;
+    white-space: normal;
+  }
+
+  .hero {
+    aspect-ratio: 16 / 9;
+  }
+
 }
