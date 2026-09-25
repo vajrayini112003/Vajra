@@ -10,7 +10,8 @@ const esc = s =>
   }[m]));
 
 const stars = n =>
-  '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n));
+  '★'.repeat(Math.round(n)) +
+  '☆'.repeat(5 - Math.round(n));
 
 const fmt = d =>
   new Date(d).toLocaleDateString(undefined, {
@@ -22,6 +23,7 @@ const fmt = d =>
 
 const monthKey = d => {
   const x = new Date(d);
+
   return (
     x.getUTCFullYear() +
     '-' +
@@ -41,12 +43,12 @@ let current = null;
 let timer = null;
 let rating = 0;
 
-const SLIDE_MS = 5000; // 5-second delay between photos
+const SLIDE_MS = 5000;
 
 
-/* =========================================================
-   PROFILE
-   ========================================================= */
+// =========================================================
+// PROFILE
+// =========================================================
 
 async function loadProfile() {
   const avatar = $('avatar');
@@ -56,67 +58,68 @@ async function loadProfile() {
   const res = await fetch('/api/colleges/profile');
   const p = await res.json();
 
-  avatar.onload = () => {
+  const img = new Image();
+
+  img.onload = () => {
+    avatar.src = p.photo;
     avatar.style.visibility = 'visible';
   };
 
-  avatar.onerror = () => {
+  img.onerror = () => {
+    avatar.src = '/img/vajrayini.png';
     avatar.style.visibility = 'visible';
   };
 
- const img = new Image();
-
-img.onload = () => {
-  avatar.src = p.photo;
-  avatar.style.visibility = 'visible';
-};
-
-img.onerror = () => {
-  avatar.src = '/img/vajrayini.png';
-  avatar.style.visibility = 'visible';
-};
-
-img.src = p.photo;
+  img.src = p.photo;
 
   $('p-name').textContent = p.name;
   $('p-title').textContent = p.title;
 }
 
 
-/* =========================================================
-   STATS
-   ========================================================= */
+// =========================================================
+// STATS
+// =========================================================
 
 async function loadStats() {
-  const s = await (await fetch('/api/colleges/stats')).json();
+  const s =
+    await (await fetch('/api/colleges/stats')).json();
 
-  $('stat-colleges').textContent = s.colleges;
-  $('stat-students').textContent = s.students;
+  $('stat-colleges').textContent =
+    s.colleges;
 
-  $('stat-rating').innerHTML = s.feedbackCount
-    ? `${s.avgRating} <span class="stars">★</span>`
-    : '—';
+  $('stat-students').textContent =
+    s.students;
+
+  $('stat-rating').innerHTML =
+    s.feedbackCount
+      ? `${s.avgRating} <span class="stars">★</span>`
+      : '—';
 }
 
 
-/* =========================================================
-   COLLEGES
-   ========================================================= */
+// =========================================================
+// COLLEGES
+// =========================================================
 
 async function loadColleges() {
-  colleges = await (await fetch('/api/colleges')).json();
+  colleges =
+    await (await fetch('/api/colleges')).json();
 }
 
 
-/* =========================================================
-   PHOTO SLIDESHOW
-   ========================================================= */
+// =========================================================
+// PHOTO SLIDESHOW
+// =========================================================
 
 function startSlides(photos) {
   clearInterval(timer);
 
-  const imgs = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
+  const imgs =
+    document.querySelectorAll('.slide');
+
+  const dots =
+    document.querySelectorAll('.dot');
 
   if (!imgs.length) return;
 
@@ -126,46 +129,68 @@ function startSlides(photos) {
     i = n;
 
     imgs.forEach((e, k) => {
-      e.classList.toggle('on', k === i);
+      e.classList.toggle(
+        'on',
+        k === i
+      );
     });
 
     dots.forEach((e, k) => {
-      e.classList.toggle('on', k === i);
+      e.classList.toggle(
+        'on',
+        k === i
+      );
     });
   };
 
   dots.forEach((d, k) => {
+
     d.addEventListener('click', () => {
+
       go(k);
+
       startSlides(photos);
+
     });
+
   });
 
   if (imgs.length > 1) {
+
     timer = setInterval(() => {
+
       go((i + 1) % imgs.length);
+
     }, SLIDE_MS);
+
   }
 }
 
 
-/* =========================================================
-   SHOW COLLEGE
-   ========================================================= */
+// =========================================================
+// SHOW COLLEGE
+// =========================================================
 
 function show(c) {
+
   current = c;
 
   if (!c) {
+
     clearInterval(timer);
 
-    $('feedback-card').style.display = 'none';
-    $('feedback-list').innerHTML = '';
+    $('feedback-card').style.display =
+      'none';
+
+    $('feedback-list').innerHTML =
+      '';
 
     return;
   }
 
+
   const ph = c.photos || [];
+
 
   const dateText =
     c.startDate && c.endDate
@@ -173,6 +198,7 @@ function show(c) {
       : c.startDate
         ? fmt(c.startDate)
         : '';
+
 
   const departmentYear = [
     c.department,
@@ -183,33 +209,64 @@ function show(c) {
     .join(' · ');
 
 
+  // =======================================================
+  // COLLEGE PAGE LAYOUT
+  // Name + Date
+  // Photo
+  // Department + Year / Days + Students
+  // Course
+  // Description
+  // =======================================================
+
   $('college-view').innerHTML = `
 
-    <!-- COLLEGE PHOTO -->
+    <!-- COLLEGE NAME + DATE -->
+    <div class="college-title-row">
 
+      <h2>
+        ${esc(c.collegeName)}
+      </h2>
+
+      <div class="college-dates">
+        ${dateText}
+      </div>
+
+    </div>
+
+
+    <!-- COLLEGE PHOTO -->
     <div class="hero">
 
       ${
         ph.length
+
           ? ph.map((p, k) => `
               <img
                 class="slide${k ? '' : ' on'}"
                 src="${p}"
                 alt="${esc(c.collegeName)}"
+                loading="${k === 0 ? 'eager' : 'lazy'}"
+                decoding="async"
               >
-            `).join('') +
+            `).join('')
+
+            +
 
             (
               ph.length > 1
+
                 ? `
                   <div class="dots">
 
                     ${ph.map((_, k) => `
-                      <span class="dot${k ? '' : ' on'}"></span>
+                      <span
+                        class="dot${k ? '' : ' on'}"
+                      ></span>
                     `).join('')}
 
                   </div>
                 `
+
                 : ''
             )
 
@@ -220,50 +277,42 @@ function show(c) {
 
 
     <!-- COLLEGE DETAILS -->
-
     <div class="college-details">
 
 
-      <!-- College Name + Date -->
-
-      <div class="college-title-row">
-
-        <h2>
-          ${esc(c.collegeName)}
-        </h2>
-
-        <div class="college-dates">
-          ${dateText}
-        </div>
-
-      </div>
-
-
-      <!-- Department + Year / Days + Students -->
+      <!-- DEPARTMENT + YEAR / DAYS + STUDENTS -->
 
       <div class="department-training-row">
 
         ${
           departmentYear
+
             ? `
               <div class="department-year">
                 ${departmentYear}
               </div>
             `
+
             : ''
         }
+
 
         <div class="training-info">
 
           ${
             c.noOfDays
+
               ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
+
               : ''
           }
 
+
           ${
             c.studentsTrained
+
               ? ` · ${c.studentsTrained} students`
+
               : ''
           }
 
@@ -272,7 +321,7 @@ function show(c) {
       </div>
 
 
-      <!-- Course Title -->
+      <!-- COURSE TITLE -->
 
       <div class="course-row">
 
@@ -283,233 +332,316 @@ function show(c) {
       </div>
 
 
-      <!-- Description -->
+      <!-- DESCRIPTION -->
 
       ${
         c.description
+
           ? `
             <p class="entry-desc">
               ${esc(c.description)}
             </p>
           `
+
           : ''
       }
 
+
     </div>
+
   `;
 
 
-  /* Month picker */
+  // =======================================================
+  // MONTH PICKER
+  // =======================================================
 
-  $('month-pick').value = c.startDate
-    ? monthKey(c.startDate)
-    : '';
+  $('month-pick').value =
+    c.startDate
+      ? monthKey(c.startDate)
+      : '';
 
 
-  /* Start slideshow */
+  // =======================================================
+  // START SLIDESHOW
+  // =======================================================
 
   startSlides(ph);
 
 
-  /* Existing feedback FIRST */
+  // =======================================================
+  // EXISTING FEEDBACK
+  // =======================================================
 
   renderFeedback();
 
 
-  /* Leave your feedback AFTER existing feedback */
+  // =======================================================
+  // LEAVE FEEDBACK AFTER EXISTING FEEDBACK
+  // =======================================================
 
-  const feedbackList = $('feedback-list');
-  const feedbackCard = $('feedback-card');
+  const feedbackList =
+    $('feedback-list');
 
-  feedbackCard.style.display = 'block';
+  const feedbackCard =
+    $('feedback-card');
+
+  feedbackCard.style.display =
+    'block';
 
   feedbackList.insertAdjacentElement(
     'afterend',
     feedbackCard
   );
+
 }
 
 
-/* =========================================================
-   FEEDBACK LIST
-   ========================================================= */
+// =========================================================
+// FEEDBACK LIST
+// =========================================================
 
 function renderFeedback() {
-  const list = current
-    ? current.feedbacks || []
-    : [];
 
-  $('feedback-list').innerHTML = list.length
-    ? `
-      <div class="feedback-section">
+  const list =
+    current
+      ? current.feedbacks || []
+      : [];
 
-        <h3>Feedback</h3>
 
-        ${list.map(f => `
-          <div class="feedback-row">
+  $('feedback-list').innerHTML =
+    list.length
 
-            <div class="feedback-head">
+      ? `
+        <div class="feedback-section">
 
-              <span class="feedback-name">
-                ${esc(f.name)}
-              </span>
+          <h3>Feedback</h3>
 
-              <span class="stars">
-                ${stars(f.rating)}
-              </span>
+          ${list.map(f => `
+
+            <div class="feedback-row">
+
+              <div class="feedback-head">
+
+                <span class="feedback-name">
+                  ${esc(f.name)}
+                </span>
+
+                <span class="stars">
+                  ${stars(f.rating)}
+                </span>
+
+              </div>
+
+
+              <div class="feedback-comment">
+                ${esc(f.comment)}
+              </div>
 
             </div>
 
-            <div class="feedback-comment">
-              ${esc(f.comment)}
-            </div>
+          `).join('')}
 
-          </div>
-        `).join('')}
+        </div>
+      `
 
-      </div>
-    `
-    : '';
+      : '';
 }
 
 
-/* =========================================================
-   COLLEGE MENU
-   ========================================================= */
+// =========================================================
+// COLLEGE MENU
+// =========================================================
 
 function renderMenu() {
-  $('clg-menu').innerHTML = colleges.length
 
-    ? colleges.map(c => `
-        <button
-          type="button"
-          data-id="${c._id}"
-          class="${current && current._id === c._id ? 'sel' : ''}"
-        >
-          ${esc(c.collegeName)}
+  $('clg-menu').innerHTML =
+    colleges.length
 
-          <small>
-            ${monthLabel(monthKey(c.startDate))}
-          </small>
+      ? colleges.map(c => `
 
-        </button>
-      `).join('')
+          <button
+            type="button"
+            data-id="${c._id}"
+            class="${
+              current &&
+              current._id === c._id
+                ? 'sel'
+                : ''
+            }"
+          >
 
-    : `
-      <div
-        class="ticker-empty"
-        style="padding:10px 14px"
-      >
-        No colleges yet
-      </div>
-    `;
+            ${esc(c.collegeName)}
+
+            <small>
+              ${monthLabel(
+                monthKey(c.startDate)
+              )}
+            </small>
+
+          </button>
+
+        `).join('')
+
+      : `
+          <div
+            class="ticker-empty"
+            style="padding:10px 14px"
+          >
+            No colleges yet
+          </div>
+        `;
 }
 
 
-/* =========================================================
-   COLLEGE MENU EVENTS
-   ========================================================= */
+// =========================================================
+// COLLEGE MENU EVENTS
+// =========================================================
 
-$('clg-btn').addEventListener('click', () => {
+$('clg-btn').addEventListener(
+  'click',
+  () => {
 
-  renderMenu();
+    renderMenu();
 
-  $('clg-menu').hidden =
-    !$('clg-menu').hidden;
+    $('clg-menu').hidden =
+      !$('clg-menu').hidden;
 
-});
-
-
-$('clg-menu').addEventListener('click', e => {
-
-  const b = e.target.closest('button');
-
-  if (!b) return;
-
-  show(
-    colleges.find(
-      c => c._id === b.dataset.id
-    )
-  );
-
-  $('clg-menu').hidden = true;
-
-});
-
-
-document.addEventListener('click', e => {
-
-  if (!$('clg-picker').contains(e.target)) {
-    $('clg-menu').hidden = true;
   }
+);
 
-});
+
+$('clg-menu').addEventListener(
+  'click',
+  e => {
+
+    const b =
+      e.target.closest('button');
+
+    if (!b) return;
 
 
-/* =========================================================
-   MONTH & YEAR FILTER
-   ========================================================= */
+    show(
+      colleges.find(
+        c => c._id === b.dataset.id
+      )
+    );
 
-$('month-pick').addEventListener('change', e => {
 
-  const k = e.target.value;
+    $('clg-menu').hidden =
+      true;
 
-  if (!k) {
-    return show(colleges[0]);
   }
+);
 
-  const hit = colleges.find(
-    c => monthKey(c.startDate) === k
-  );
 
-  if (hit) {
-    return show(hit);
+document.addEventListener(
+  'click',
+  e => {
+
+    if (
+      !$('clg-picker')
+        .contains(e.target)
+    ) {
+
+      $('clg-menu').hidden =
+        true;
+
+    }
+
   }
-
-  clearInterval(timer);
-
-  current = null;
-
-  $('college-view').innerHTML = `
-    <div class="empty-state">
-      No college visit recorded in ${monthLabel(k)}.
-    </div>
-  `;
-
-  show(null);
-
-});
+);
 
 
-/* =========================================================
-   STAR RATING
-   ========================================================= */
+// =========================================================
+// MONTH & YEAR FILTER
+// =========================================================
 
-$('star-picker').addEventListener('click', e => {
+$('month-pick').addEventListener(
+  'change',
+  e => {
 
-  if (!e.target.dataset.v) return;
+    const k = e.target.value;
 
-  rating = Number(
-    e.target.dataset.v
-  );
 
-  document
-    .querySelectorAll('#star-picker span')
-    .forEach(s => {
+    if (!k) {
+      return show(colleges[0]);
+    }
 
-      s.classList.toggle(
-        'on',
-        Number(s.dataset.v) <= rating
+
+    const hit =
+      colleges.find(
+        c =>
+          monthKey(c.startDate) === k
       );
 
-    });
 
-});
+    if (hit) {
+      return show(hit);
+    }
 
 
-/* =========================================================
-   FEEDBACK SUBMIT
-   ========================================================= */
+    clearInterval(timer);
+
+    current = null;
+
+
+    $('college-view').innerHTML = `
+
+      <div class="empty-state">
+
+        No college visit recorded in
+        ${monthLabel(k)}.
+
+      </div>
+
+    `;
+
+
+    show(null);
+
+  }
+);
+
+
+// =========================================================
+// STAR RATING
+// =========================================================
+
+$('star-picker').addEventListener(
+  'click',
+  e => {
+
+    if (!e.target.dataset.v)
+      return;
+
+
+    rating =
+      Number(
+        e.target.dataset.v
+      );
+
+
+    document
+      .querySelectorAll(
+        '#star-picker span'
+      )
+      .forEach(s => {
+
+        s.classList.toggle(
+          'on',
+          Number(s.dataset.v) <= rating
+        );
+
+      });
+
+  }
+);
+
+
+// =========================================================
+// FEEDBACK SUBMIT
+// =========================================================
 
 $('feedback-form').addEventListener(
   'submit',
@@ -517,10 +649,15 @@ $('feedback-form').addEventListener(
 
     e.preventDefault();
 
-    const msg = $('form-msg');
 
-    msg.className = 'msg';
-    msg.textContent = '';
+    const msg =
+      $('form-msg');
+
+    msg.className =
+      'msg';
+
+    msg.textContent =
+      '';
 
 
     if (!rating) {
@@ -528,58 +665,78 @@ $('feedback-form').addEventListener(
       msg.textContent =
         'Please pick a star rating.';
 
-      msg.classList.add('err');
+      msg.classList.add(
+        'err'
+      );
 
       return;
+
     }
 
 
     const btn =
-      e.target.querySelector('button');
+      e.target.querySelector(
+        'button'
+      );
 
-    btn.disabled = true;
+    btn.disabled =
+      true;
 
 
     try {
 
-      const res = await fetch(
-        `/api/colleges/${current._id}/feedback`,
-        {
-          method: 'POST',
+      const res =
+        await fetch(
+          `/api/colleges/${current._id}/feedback`,
+          {
+            method: 'POST',
 
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
 
-          body: JSON.stringify({
-            name:
-              $('f-name').value.trim(),
+            body:
+              JSON.stringify({
 
-            rating,
+                name:
+                  $('f-name')
+                    .value
+                    .trim(),
 
-            comment:
-              $('f-comment').value.trim()
-          })
-        }
-      );
+                rating,
+
+                comment:
+                  $('f-comment')
+                    .value
+                    .trim()
+
+              })
+
+          }
+        );
 
 
-      const data = await res.json();
+      const data =
+        await res.json();
 
 
       if (!res.ok) {
+
         throw new Error(
           data.error ||
           'Something went wrong'
         );
+
       }
 
 
       msg.textContent =
         'Thanks — your feedback is live.';
 
-      msg.classList.add('ok');
+      msg.classList.add(
+        'ok'
+      );
 
 
       e.target.reset();
@@ -588,21 +745,29 @@ $('feedback-form').addEventListener(
 
 
       document
-        .querySelectorAll('#star-picker span')
+        .querySelectorAll(
+          '#star-picker span'
+        )
         .forEach(s =>
           s.classList.remove('on')
         );
 
 
-      /* Update feedback without restarting slideshow */
+      // Update feedback
+      // without restarting slideshow
 
-      const id = current._id;
+      const id =
+        current._id;
+
 
       await loadColleges();
 
-      current = colleges.find(
-        c => c._id === id
-      );
+
+      current =
+        colleges.find(
+          c => c._id === id
+        );
+
 
       renderFeedback();
 
@@ -614,12 +779,15 @@ $('feedback-form').addEventListener(
       msg.textContent =
         err.message;
 
-      msg.classList.add('err');
+      msg.classList.add(
+        'err'
+      );
 
 
     } finally {
 
-      btn.disabled = false;
+      btn.disabled =
+        false;
 
     }
 
@@ -627,9 +795,9 @@ $('feedback-form').addEventListener(
 );
 
 
-/* =========================================================
-   INITIAL LOAD
-   ========================================================= */
+// =========================================================
+// INITIAL LOAD
+// =========================================================
 
 (async () => {
 
