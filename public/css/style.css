@@ -42,13 +42,19 @@ a {
   color: inherit;
 }
 
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
 .wrap {
   max-width: 880px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* ===== HEADER ===== */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .header {
   border-bottom: 2px solid var(--ink);
@@ -113,7 +119,9 @@ a {
   font-family: 'Fraunces', serif;
 }
 
-/* ===== REGISTER / OLD LIST STYLES ===== */
+/* =========================================================
+   OLD / COMMON ENTRY STYLES
+   ========================================================= */
 
 .register-heading {
   display: flex;
@@ -204,7 +212,9 @@ a {
   max-width: 62ch;
 }
 
-/* ===== TICKER ===== */
+/* =========================================================
+   TICKER
+   ========================================================= */
 
 .ticker {
   margin-top: 16px;
@@ -262,7 +272,9 @@ a {
   color: var(--muted);
 }
 
-/* ===== FOOTER ===== */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .footer {
   margin-top: 60px;
@@ -291,7 +303,9 @@ a {
   text-decoration: none;
 }
 
-/* ===== DETAIL PHOTOS ===== */
+/* =========================================================
+   DETAIL PHOTOS
+   ========================================================= */
 
 .detail-photos {
   display: grid;
@@ -308,7 +322,9 @@ a {
   border: 1px solid var(--rule);
 }
 
-/* ===== CARD / FORM ===== */
+/* =========================================================
+   CARD / FORM
+   ========================================================= */
 
 .card {
   background: var(--paper-raised);
@@ -409,7 +425,9 @@ a {
   color: var(--rust);
 }
 
-/* ===== FEEDBACK ===== */
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
 
 .feedback-list {
   margin-top: 30px;
@@ -456,14 +474,18 @@ a {
   margin-top: 24px;
 }
 
-/* ===== LOGIN ===== */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 .login-box {
   max-width: 340px;
   margin: 100px auto;
 }
 
-/* ===== PHOTO INPUT ===== */
+/* =========================================================
+   PHOTO INPUT
+   ========================================================= */
 
 .photo-input-preview {
   display: grid;
@@ -501,7 +523,9 @@ a {
   padding: 0;
 }
 
-/* ===== ADMIN ===== */
+/* =========================================================
+   ADMIN
+   ========================================================= */
 
 .admin-topbar {
   display: flex;
@@ -616,7 +640,8 @@ a {
 }
 
 /* =========================================================
-   COLLEGE PHOTO - FULL WIDTH, NO EMPTY SPACE
+   COLLEGE PHOTO
+   Full width, original image height
    ========================================================= */
 
 .hero {
@@ -642,16 +667,49 @@ a {
   opacity: 1;
 }
 
+.hero-empty {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.25);
+}
+
+.dot.on {
+  background: var(--gold);
+}
 
 /* =========================================================
    COLLEGE DETAILS
+
+   College Name                         Date
+   Department · Year             Days · Students
+   Course Title
    ========================================================= */
 
 .college-details {
   margin-top: 22px;
 }
-
-/* College name left + date right */
 
 .college-title-row {
   display: flex;
@@ -672,9 +730,6 @@ a {
   text-align: right;
   white-space: nowrap;
 }
-
-
-/* Department/Year left + Days/Students right */
 
 .department-training-row {
   display: flex;
@@ -698,9 +753,6 @@ a {
   white-space: nowrap;
 }
 
-
-/* Course title */
-
 .course-row {
   margin-top: 8px;
 }
@@ -713,36 +765,6 @@ a {
   max-width: 100%;
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 560px) {
-
-  .college-title-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .college-dates {
-    text-align: left;
-    white-space: normal;
-  }
-
-  .department-training-row {
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .training-info {
-    text-align: right;
-    white-space: normal;
-  }
-
-}
 /* =========================================================
    COLLEGE PICKER
    ========================================================= */
@@ -807,47 +829,9 @@ a {
 
 @media (max-width: 560px) {
 
-  .entry {
-    grid-template-columns: 64px 1fr;
+  .wrap {
+    padding: 0 16px;
   }
-
-  .entry-photo,
-  .entry-photo-fallback {
-    width: 64px;
-    height: 64px;
-  }
-
-  .field-row {
-    grid-template-columns: 1fr;
-  }
-
-  .header-row {
-    flex-wrap: wrap;
-  }
-
-  .college-title-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .college-dates {
-    text-align: left;
-    white-space: normal;
-  }
-
-  .course-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .course-row .training-info {
-    text-align: left;
-    white-space: normal;
-  }
-
- @media (max-width: 560px) {
 
   .entry {
     grid-template-columns: 64px 1fr;
@@ -867,6 +851,17 @@ a {
     flex-wrap: wrap;
   }
 
+  .header h1 {
+    font-size: 30px;
+  }
+
+  .header .stats {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  /* College name + date */
+
   .college-title-row {
     flex-direction: column;
     align-items: flex-start;
@@ -878,17 +873,36 @@ a {
     white-space: normal;
   }
 
-  .course-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  /* Department + days/students */
+
+  .department-training-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
   }
 
-  .course-row .training-info {
-    text-align: left;
+  .department-year {
+    font-size: 12px;
+  }
+
+  .training-info {
+    text-align: right;
     white-space: normal;
+    font-size: 11px;
   }
 
-}
+  /* Feedback */
+
+  .feedback-head {
+    gap: 10px;
+  }
+
+  /* College picker */
+
+  .clg-picker {
+    right: 12px;
+    bottom: 12px;
+  }
 
 }
