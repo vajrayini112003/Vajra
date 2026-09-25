@@ -997,3 +997,8 @@ a {
 .photo-input-preview .remove-x:hover {
   background: #b71c1c;
 }
+
+.footer {
+  border-top: 2px solid #8f8468;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.08);
+}
