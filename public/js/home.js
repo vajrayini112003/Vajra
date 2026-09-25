@@ -64,7 +64,19 @@ async function loadProfile() {
     avatar.style.visibility = 'visible';
   };
 
+ const img = new Image();
+
+img.onload = () => {
   avatar.src = p.photo;
+  avatar.style.visibility = 'visible';
+};
+
+img.onerror = () => {
+  avatar.src = '/img/vajrayini.png';
+  avatar.style.visibility = 'visible';
+};
+
+img.src = p.photo;
 
   $('p-name').textContent = p.name;
   $('p-title').textContent = p.title;
