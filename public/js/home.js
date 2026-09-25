@@ -204,6 +204,7 @@ $('feedback-form').addEventListener('submit', async e => {
   rating,
   comment: $('f-comment').value.trim()
 })
+});
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Something went wrong');
     msg.textContent = 'Thanks — your feedback is live.'; msg.classList.add('ok');
