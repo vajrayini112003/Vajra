@@ -107,19 +107,37 @@ function show(c) {
         </div>
       </div>
 
-      ${
-        departmentYear
-          ? `<div class="department-year">${departmentYear}</div>`
-          : ''
-      }
+     <div class="department-training-row">
 
-      <div class="course-row">
+  ${
+    departmentYear
+      ? `<div class="department-year">${departmentYear}</div>`
+      : ''
+  }
 
-        <span class="entry-topic">
-          ${esc(c.topic)}
-        </span>
+  <div class="training-info">
+    ${
+      c.noOfDays
+        ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
+        : ''
+    }
 
-        <div class="training-info">
+    ${
+      c.studentsTrained
+        ? ` · ${c.studentsTrained} students`
+        : ''
+    }
+  </div>
+
+</div>
+
+<div class="course-row">
+
+  <span class="entry-topic">
+    ${esc(c.topic)}
+  </span>
+
+</div>
           ${
             c.noOfDays
               ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
