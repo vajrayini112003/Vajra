@@ -95,3 +95,37 @@ if (!name || !rating || !comment) {
 });
 
 module.exports = router;
+
+router.get('/profile-image', async (req, res) => {
+  try {
+    const profile = await Profile.findOne();
+
+    if (!profile || !profile.photo) {
+      return res.status(404).end();
+    }
+
+    const match = profile.photo.match(
+      /^data:(image\/[^;]+);base64,(.+)$/
+    );
+
+    if (!match) {
+      return res.status(404).end();
+    }
+
+    const contentType = match[1];
+    const imageBuffer = Buffer.from(match[2], 'base64');
+
+    res.set('Content-Type', contentType);
+
+    // Browser cache
+    res.set(
+      'Cache-Control',
+      'public, max-age=3600'
+    );
+
+    res.send(imageBuffer);
+
+  } catch (err) {
+    res.status(500).end();
+  }
+});
