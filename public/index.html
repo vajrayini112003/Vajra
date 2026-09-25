@@ -35,22 +35,21 @@
   <section class="card" id="feedback-card" style="display:none">
     <h3>Leave your feedback</h3>
     <form id="feedback-form">
-      <div class="field-row">
-        <div class="field"><label for="f-name">Your name</label><input type="text" id="f-name" required></div>
-        <div class="field"><label for="f-dept">Department</label><input type="text" id="f-dept" placeholder="e.g. CSE" required></div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="f-year">Year</label>
-          <select id="f-year" required>
-            <option value="">Select</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Rating</label>
-          <div class="star-picker" id="star-picker"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
-        </div>
-      </div>
+  <div class="field">
+    <label for="f-name">Your name</label>
+    <input type="text" id="f-name" required>
+  </div>
+
+  <div class="field">
+    <label>Rating</label>
+    <div class="star-picker" id="star-picker">
+      <span data-v="1">★</span>
+      <span data-v="2">★</span>
+      <span data-v="3">★</span>
+      <span data-v="4">★</span>
+      <span data-v="5">★</span>
+    </div>
+  </div>
       <div class="field"><label for="f-comment">Feedback</label><textarea id="f-comment" required placeholder="How was the class?"></textarea></div>
       <button class="btn" type="submit">Submit feedback</button>
       <div class="msg" id="form-msg"></div>
