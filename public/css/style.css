@@ -1002,3 +1002,14 @@ a {
   border-top: 2px solid #8f8468;
   box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.08);
 }
+/* College heading spacing */
+.college-title-row {
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(40, 50, 40, 0.35);
+}
+
+/* Keep the heading closer to the line */
+.college-title-row h2 {
+  margin-top: 4px;
+}
