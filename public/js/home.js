@@ -72,23 +72,48 @@ function show(c) {
   ].filter(Boolean).map(esc).join(' · ');
 
   $('college-view').innerHTML = `
-    <div class="hero">${ph.length
-      ? ph.map((p, k) => `<img class="slide${k ? '' : ' on'}" src="${p}" alt="">`).join('') +
-        (ph.length > 1
-          ? `<div class="dots">${ph.map((_, k) =>
-              `<span class="dot${k ? '' : ' on'}"></span>`
-            ).join('')}</div>`
-          : '')
-      : '<div class="hero-empty">No photos yet</div>'}</div>
+    <div class="hero">
+      ${ph.length
+        ? ph.map((p, k) =>
+            `<img class="slide${k ? '' : ' on'}" src="${p}" alt="${esc(c.collegeName)}">`
+          ).join('') +
+          (ph.length > 1
+            ? `<div class="dots">
+                ${ph.map((_, k) =>
+                  `<span class="dot${k ? '' : ' on'}"></span>`
+                ).join('')}
+              </div>`
+            : '')
+        : '<div class="hero-empty">No photos yet</div>'
+      }
+    </div>
 
     <div class="clg-head">
       <h2>${esc(c.collegeName)}</h2>
 
-      <div class="entry-meta">
-        ${dateText}
-        ${departmentYear ? ' · ' + departmentYear : ''}
-        ${c.noOfDays ? ` · ${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}` : ''}
-        ${c.studentsTrained ? ` · ${c.studentsTrained} students` : ''}
+      <div class="college-info">
+        <div class="college-info-left">
+          ${departmentYear
+            ? `<div class="department-year">${departmentYear}</div>`
+            : ''
+          }
+
+          <div class="training-info">
+            ${c.noOfDays
+              ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
+              : ''
+            }
+
+            ${c.studentsTrained
+              ? ` · ${c.studentsTrained} students`
+              : ''
+            }
+          </div>
+        </div>
+
+        <div class="college-dates">
+          ${dateText}
+        </div>
       </div>
     </div>
 
@@ -96,25 +121,44 @@ function show(c) {
 
     ${c.description
       ? `<p class="entry-desc">${esc(c.description)}</p>`
-      : ''}
+      : ''
+    }
   `;
 
   $('month-pick').value = monthKey(c.startDate);
 
-  $('feedback-card').style.display = 'block';
-
   startSlides(ph);
+
+  // Existing student feedback first
   renderFeedback();
+
+  // Then show "Leave your feedback"
+  $('feedback-card').style.display = 'block';
 }
 
 function renderFeedback() {
   const list = current ? current.feedbacks || [] : [];
+
   $('feedback-list').innerHTML = list.length
-    ? `<h3>${list.length} feedback${list.length === 1 ? '' : 's'}</h3>` + list.map(f => `
-      <div class="feedback-row">
-        <div class="feedback-head"><span class="feedback-name">${esc(f.name)} · ${esc(f.dept)} · ${esc(f.year)}</span><span class="stars">${stars(f.rating)}</span></div>
-        <div style="margin-top:6px">${esc(f.comment)}</div></div>`).join('')
-    : '<div class="empty-state" style="padding:24px 0">No feedback yet — be the first to leave one.</div>';
+    ? `
+      <div class="feedback-section">
+        <h3>Feedback</h3>
+
+        ${list.map(f => `
+          <div class="feedback-row">
+            <div class="feedback-head">
+              <span class="feedback-name">${esc(f.name)}</span>
+              <span class="stars">${stars(f.rating)}</span>
+            </div>
+
+            <div class="feedback-comment">
+              ${esc(f.comment)}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `
+    : '';
 }
 
 function renderMenu() {
@@ -155,8 +199,11 @@ $('feedback-form').addEventListener('submit', async e => {
   try {
     const res = await fetch(`/api/colleges/${current._id}/feedback`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: $('f-name').value.trim(), dept: $('f-dept').value.trim(), year: $('f-year').value, rating, comment: $('f-comment').value.trim() })
-    });
+      body: JSON.stringify({
+  name: $('f-name').value.trim(),
+  rating,
+  comment: $('f-comment').value.trim()
+})
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Something went wrong');
     msg.textContent = 'Thanks — your feedback is live.'; msg.classList.add('ok');
