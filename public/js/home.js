@@ -73,67 +73,92 @@ function show(c) {
 
   $('college-view').innerHTML = `
     <div class="hero">
-      ${ph.length
-        ? ph.map((p, k) =>
-            `<img class="slide${k ? '' : ' on'}" src="${p}" alt="${esc(c.collegeName)}">`
-          ).join('') +
-          (ph.length > 1
-            ? `<div class="dots">
-                ${ph.map((_, k) =>
-                  `<span class="dot${k ? '' : ' on'}"></span>`
-                ).join('')}
-              </div>`
-            : '')
-        : '<div class="hero-empty">No photos yet</div>'
+      ${
+        ph.length
+          ? ph.map((p, k) =>
+              `<img
+                class="slide${k ? '' : ' on'}"
+                src="${p}"
+                alt="${esc(c.collegeName)}"
+              >`
+            ).join('') +
+            (
+              ph.length > 1
+                ? `
+                  <div class="dots">
+                    ${ph.map((_, k) =>
+                      `<span class="dot${k ? '' : ' on'}"></span>`
+                    ).join('')}
+                  </div>
+                `
+                : ''
+            )
+          : '<div class="hero-empty">No photos yet</div>'
       }
     </div>
 
-    <div class="clg-head">
-      <h2>${esc(c.collegeName)}</h2>
+    <div class="college-details">
 
-      <div class="college-info">
-        <div class="college-info-left">
-          ${departmentYear
-            ? `<div class="department-year">${departmentYear}</div>`
-            : ''
-          }
-
-          <div class="training-info">
-            ${c.noOfDays
-              ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
-              : ''
-            }
-
-            ${c.studentsTrained
-              ? ` · ${c.studentsTrained} students`
-              : ''
-            }
-          </div>
-        </div>
+      <div class="college-title-row">
+        <h2>${esc(c.collegeName)}</h2>
 
         <div class="college-dates">
           ${dateText}
         </div>
       </div>
+
+      ${
+        departmentYear
+          ? `<div class="department-year">${departmentYear}</div>`
+          : ''
+      }
+
+      <div class="course-row">
+
+        <span class="entry-topic">
+          ${esc(c.topic)}
+        </span>
+
+        <div class="training-info">
+          ${
+            c.noOfDays
+              ? `${c.noOfDays} day${c.noOfDays == 1 ? '' : 's'}`
+              : ''
+          }
+
+          ${
+            c.studentsTrained
+              ? ` · ${c.studentsTrained} students`
+              : ''
+          }
+        </div>
+
+      </div>
+
+      ${
+        c.description
+          ? `<p class="entry-desc">${esc(c.description)}</p>`
+          : ''
+      }
+
     </div>
-
-    <span class="entry-topic">${esc(c.topic)}</span>
-
-    ${c.description
-      ? `<p class="entry-desc">${esc(c.description)}</p>`
-      : ''
-    }
   `;
 
-  $('month-pick').value = monthKey(c.startDate);
+  $('month-pick').value = c.startDate
+    ? monthKey(c.startDate)
+    : '';
 
   startSlides(ph);
 
-  // Existing student feedback first
+  // Existing feedback FIRST
   renderFeedback();
 
-  // Then show "Leave your feedback"
-  $('feedback-card').style.display = 'block';
+  // Put Leave your feedback AFTER existing feedback
+  const feedbackList = $('feedback-list');
+  const feedbackCard = $('feedback-card');
+
+  feedbackCard.style.display = 'block';
+  feedbackList.insertAdjacentElement('afterend', feedbackCard);
 }
 
 function renderFeedback() {
