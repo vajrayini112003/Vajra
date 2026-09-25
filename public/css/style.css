@@ -847,8 +847,48 @@ a {
     white-space: normal;
   }
 
-  .hero {
-    aspect-ratio: 16 / 9;
+ @media (max-width: 560px) {
+
+  .entry {
+    grid-template-columns: 64px 1fr;
   }
+
+  .entry-photo,
+  .entry-photo-fallback {
+    width: 64px;
+    height: 64px;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .header-row {
+    flex-wrap: wrap;
+  }
+
+  .college-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .college-dates {
+    text-align: left;
+    white-space: normal;
+  }
+
+  .course-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .course-row .training-info {
+    text-align: left;
+    white-space: normal;
+  }
+
+}
 
 }
