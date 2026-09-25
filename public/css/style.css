@@ -906,3 +906,44 @@ a {
   }
 
 }
+
+/* Fixed bottom bar */
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 0 32px;
+
+  background: #f8f4e8;
+  border-top: 1px solid #d8cdb0;
+
+  z-index: 1000;
+}
+
+/* Admin link */
+.footer a {
+  color: #78958b;
+  text-decoration: none;
+}
+
+/* Colleges button fixed bottom-right */
+.clg-picker {
+  position: fixed;
+  right: 32px;
+  bottom: 22px;
+
+  z-index: 1100;
+}
+
+/* Prevent content from hiding behind fixed bar */
+.wrap {
+  padding-bottom: 90px;
+}
