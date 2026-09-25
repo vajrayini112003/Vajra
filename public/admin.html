@@ -55,9 +55,15 @@
   </div>
 
   <div class="field">
-    <label for="v-year">Year</label>
-    <input type="text" id="v-year" placeholder="e.g. III Year" required>
-  </div>
+  <label for="v-year">Year</label>
+  <select id="v-year" required>
+    <option value="" selected disabled>Select year</option>
+    <option value="I Year">I Year</option>
+    <option value="II Year">II Year</option>
+    <option value="III Year">III Year</option>
+    <option value="IV Year">IV Year</option>
+  </select>
+</div>
 </div>
 
 <div class="field-row">
@@ -68,13 +74,25 @@
 
   <div class="field">
     <label for="v-days">No. of days</label>
-    <input type="number" id="v-days" min="1" value="1" required>
+   <input
+  type="number"
+  id="v-days"
+  min="1"
+  placeholder="Enter number of days"
+  required
+>
   </div>
 </div>
 
 <div class="field">
   <label for="v-students">Students trained</label>
-  <input type="number" id="v-students" min="0" value="0" required>
+ <input
+  type="number"
+  id="v-students"
+  min="0"
+  placeholder="Enter students count"
+  required
+>
 </div>
 
 <div class="field-row">
