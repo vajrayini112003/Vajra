@@ -74,21 +74,20 @@ router.get('/:id', async (req, res) => {
 // Submit feedback for a college
 router.post('/:id/feedback', async (req, res) => {
   try {
-    const { name, dept, year, rating, comment } = req.body;
-    if (!name || !dept || !year || !rating || !comment) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
+    const { name, rating, comment } = req.body;
+
+if (!name || !rating || !comment) {
+  return res.status(400).json({ error: 'All fields are required' });
+}
     const college = await College.findById(req.params.id);
     if (!college) return res.status(404).json({ error: 'College not found' });
 
     const feedback = await Feedback.create({
-      college: req.params.id,
-      name,
-      dept,
-      year,
-      rating: Number(rating),
-      comment
-    });
+  college: req.params.id,
+  name,
+  rating: Number(rating),
+  comment
+});
     res.status(201).json(feedback);
   } catch (err) {
     res.status(500).json({ error: err.message });
