@@ -1268,3 +1268,67 @@ a {
     padding: 16px;
   }
 }
+
+/* Clear spacing between college visits */
+#college-view {
+  gap: 48px;
+}
+
+.college-card {
+  margin-bottom: 0;
+  border: 1px solid #d8cbb0;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(40, 35, 20, 0.07);
+}
+
+/* Neat spacing below every college photo */
+.college-photo-wrap {
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.college-details {
+  padding: 28px 32px 32px;
+}
+
+/* Place course title and feedback button separately */
+.course-row {
+  margin: 20px 0;
+}
+
+.college-actions {
+  margin-top: 28px;
+}
+
+.feedback-toggle {
+  min-width: 140px;
+  padding: 13px 24px;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+/* Feedback panel spacing */
+.college-feedback-panel {
+  margin-top: 28px;
+  padding-top: 26px;
+}
+
+/* Responsive spacing on mobile */
+@media (max-width: 700px) {
+  #college-view {
+    gap: 28px;
+  }
+
+  .college-details {
+    padding: 20px 16px 24px;
+  }
+
+  .college-actions {
+    margin-top: 22px;
+  }
+
+  .feedback-toggle {
+    width: 100%;
+  }
+}
+
