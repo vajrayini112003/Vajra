@@ -1332,3 +1332,60 @@ a {
   }
 }
 
+
+/* Same responsive width for every college photo */
+#college-view {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.college-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.college-photo-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+.college-photo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  box-sizing: border-box;
+}
+
+/* Desktop */
+@media (min-width: 701px) {
+  .wrap {
+    width: 94%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mobile and tablet */
+@media (max-width: 700px) {
+  .wrap {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .college-photo {
+    width: 100%;
+    height: auto;
+  }
+}
