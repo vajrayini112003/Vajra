@@ -1007,3 +1007,264 @@ a {
   margin-top: 6px;
   padding-top: 14px;
 }
+
+/* ===== Responsive full-width Vajrayini homepage ===== */
+
+.wrap {
+  width: 94%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+}
+
+#college-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.college-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background: #fbf8f0;
+  border: 1px solid #ded2b7;
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-margin-top: 20px;
+}
+
+.college-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  border-bottom: 1px solid rgba(40, 50, 40, 0.15);
+}
+
+.college-title-row h2 {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.college-dates {
+  flex-shrink: 0;
+  text-align: right;
+  padding-top: 7px;
+}
+
+.college-photo-wrap {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f7f2e7;
+  line-height: 0;
+}
+
+.college-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  background: transparent;
+}
+
+.college-details {
+  padding: 22px 24px 26px;
+}
+
+.department-training-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-bottom: 16px;
+}
+
+.department-year,
+.training-info {
+  overflow-wrap: anywhere;
+}
+
+.training-info {
+  text-align: right;
+}
+
+.course-row {
+  margin: 14px 0;
+}
+
+.entry-desc {
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.college-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 22px;
+}
+
+.feedback-toggle {
+  cursor: pointer;
+}
+
+.college-feedback-panel {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #ded2b7;
+}
+
+.college-feedback-panel[hidden] {
+  display: none !important;
+}
+
+.feedback-section {
+  margin-bottom: 24px;
+}
+
+.feedback-row {
+  padding: 16px 0;
+  border-bottom: 1px solid #e4dac7;
+}
+
+.feedback-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedback-comment {
+  margin-top: 8px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.feedback-empty {
+  color: #716d63;
+  line-height: 1.6;
+}
+
+.college-feedback-form {
+  padding: 22px;
+  border: 1px solid #ded2b7;
+  border-radius: 10px;
+  background: #f8f3e8;
+}
+
+.college-feedback-form h3 {
+  margin-top: 0;
+}
+
+.college-feedback-form .field {
+  margin-bottom: 18px;
+}
+
+.college-feedback-form input,
+.college-feedback-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.star-picker {
+  display: flex;
+  gap: 8px;
+}
+
+.rating-star {
+  border: 0;
+  background: transparent;
+  color: #cbbd9d;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.rating-star.on {
+  color: #c88a22;
+}
+
+.college-feedback-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Hide the old single, page-level feedback form.
+   Each college now has its own feedback panel. */
+#feedback-card,
+#feedback-list {
+  display: none !important;
+}
+
+/* Keep the floating bottom controls above the page content. */
+.footer,
+.clg-picker {
+  z-index: 100;
+}
+
+@media (min-width: 1200px) {
+  .wrap {
+    width: 92%;
+  }
+
+  #college-view {
+    gap: 44px;
+  }
+
+  .college-title-row,
+  .college-details {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media (max-width: 700px) {
+  .wrap {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 105px;
+  }
+
+  #college-view {
+    gap: 22px;
+  }
+
+  .college-card {
+    border-radius: 8px;
+  }
+
+  .college-title-row {
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .college-dates {
+    text-align: left;
+    padding-top: 0;
+  }
+
+  .college-details {
+    padding: 16px;
+  }
+
+  .department-training-row {
+    align-items: flex-start;
+  }
+
+  .training-info {
+    text-align: left;
+  }
+
+  .college-feedback-form {
+    padding: 16px;
+  }
+}
